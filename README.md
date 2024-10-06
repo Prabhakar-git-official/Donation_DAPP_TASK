@@ -28,5 +28,5 @@ npm start
 4. To donate to an existing campaign, go to the "View Campaign" page.
 5. In the "My Activity" page, you can view your created and donated campaigns. Once a campaign has ended, you will be able to withdraw the goal amount.
 
-# Note
-Please use the Base Sepolia faucet to get funded. If the faucet is out of ETH, let me know, and I will share some test ETH.
+## Note
+#### Please use the Base Sepolia faucet to get funded. If the faucet is out of ETH, let me know, and I will share some test ETH.
