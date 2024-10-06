@@ -42,7 +42,7 @@ const MyActivity = () => {
             const donated = [];
     
             // Fetch created campaigns by the user
-            for (let i = 0; i < totalCauses; i++) {
+            for (let i = 1; i <= totalCauses; i++) {
                 const cause = await contract.causes(i);
                 console.log('Cause check:', cause);
     
