@@ -1,18 +1,18 @@
 # Donation_DAPP_TASK
 Simple Decentralized Donation Platform - where users can create causes and donate using crypto tokens
-# Smart Contract
+## Smart Contract
 This is a Solidity smart contract for a Donation Dapp, deployed on the Base Sepolia network. Please use the following configuration:
 
-# Network Name:Base Sepolia Testnet
-# RPC URL: https://sepolia.base.org/
-# Chain ID: 84532
-# Explorer: https://sepolia.basescan.org
-# Currency: ETH
-# Development Environment
+### Network Name:Base Sepolia Testnet
+### RPC URL: https://sepolia.base.org/
+### Chain ID: 84532
+### Explorer: https://sepolia.basescan.org
+### Currency: ETH
+## Development Environment
 IDE Used: Remix
 Compiler Version: 0.8.27
-# Front-End Deployment
-To deploy the front end, follow these steps:
+## Front-End Deployment
+### To deploy the front end, follow these steps:
 Clone the repository:
 https://github.com/Prabhakar-git-official/Donation_DAPP_TASK.git
 Install dependencies using npm:
