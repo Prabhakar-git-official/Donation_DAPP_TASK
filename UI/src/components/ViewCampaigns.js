@@ -1,25 +1,69 @@
 import React, { useEffect, useState } from 'react';
-import { ethers } from 'ethers'; // Ensure you have ethers.js installed
+import { ethers } from 'ethers';
 import CampaignCard from './CampaignCard';
-import { Container, Row, Col, Spinner, Button, Pagination } from 'react-bootstrap'; // Import Bootstrap components
-import { DONATION_Contract_ABI, DonationcontractAddress } from '../abi/contractabi'; // Import your contract details
+import { Container, Row, Col, Spinner, Button, Pagination } from 'react-bootstrap';
+import { DONATION_Contract_ABI, DonationcontractAddress } from '../abi/contractabi';
 
 const ViewCampaigns = ({ onDonate }) => {
     const [campaigns, setCampaigns] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null); 
+    const [error, setError] = useState(null);
+    const [walletConnected, setWalletConnected] = useState(false); // New state for wallet connection
 
     // Pagination states
     const [currentPage, setCurrentPage] = useState(1);
-    const [campaignsPerPage] = useState(5); 
+    const [campaignsPerPage] = useState(5);
+
+    // Function to request wallet connection
+    const connectWallet = async () => {
+        if (window.ethereum) {
+            try {
+                // Request account access
+                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                if (accounts.length > 0) {
+                    setWalletConnected(true);
+                }
+            } catch (err) {
+                console.error("User denied wallet connection:", err);
+                setError('Failed to connect wallet. Please try again.');
+            }
+        } else {
+            setError('MetaMask not detected. Please install MetaMask.');
+        }
+    };
+
+    useEffect(() => {
+        const checkWalletConnection = async () => {
+            if (window.ethereum) {
+                const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+                if (accounts.length > 0) {
+                    setWalletConnected(true);
+                    setLoading(false); // Wallet is connected, stop loading
+                } else {
+                    setWalletConnected(false);
+                    setLoading(false); // No wallet connected, stop loading
+                }
+            } else {
+                setError('MetaMask not detected. Please install MetaMask.');
+                setLoading(false); // MetaMask not installed, stop loading
+            }
+        };
+
+        checkWalletConnection();
+    }, []);
 
     useEffect(() => {
         const fetchCampaigns = async () => {
+            if (!walletConnected) {
+                setLoading(false); // Stop loading if wallet is not connected
+                return;
+            }
+
             try {
                 const provider = new ethers.providers.Web3Provider(window.ethereum);
                 const contract = new ethers.Contract(DonationcontractAddress, DONATION_Contract_ABI, provider);
 
-                const causeCount = await contract.causeCount(); // Get the no.of campaigns
+                const causeCount = await contract.causeCount(); // Get the number of campaigns
                 const campaignsArray = [];
 
                 for (let i = 1; i <= causeCount; i++) {
@@ -38,27 +82,40 @@ const ViewCampaigns = ({ onDonate }) => {
                 setCampaigns(campaignsArray);
             } catch (error) {
                 console.error("Error fetching campaigns:", error);
-                setError('Please Connect wallet to Access Donation Platform.'); // Set error message
+                setError('Failed to fetch campaigns. Please try again later.');
             } finally {
-                setLoading(false);
+                setLoading(false); // Ensure loading is stopped after fetching campaigns
             }
         };
 
-        fetchCampaigns(); 
-    }, []);
+        if (walletConnected) {
+            fetchCampaigns(); // Fetch campaigns if wallet is connected
+        }
+    }, [walletConnected]); // Re-run when walletConnected changes
 
-    // Get current campaigns based on the current page
-    const indexOfLastCampaign = currentPage * campaignsPerPage; // Last index of current page
-    const indexOfFirstCampaign = indexOfLastCampaign - campaignsPerPage; // First index of current page
-    const currentCampaigns = campaigns.slice(indexOfFirstCampaign, indexOfLastCampaign); // Get current campaigns
+    // Pagination logic
+    const indexOfLastCampaign = currentPage * campaignsPerPage;
+    const indexOfFirstCampaign = indexOfLastCampaign - campaignsPerPage;
+    const currentCampaigns = campaigns.slice(indexOfFirstCampaign, indexOfLastCampaign);
+    const totalPages = Math.ceil(campaigns.length / campaignsPerPage);
 
-    // Change page
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-    const totalPages = Math.ceil(campaigns.length / campaignsPerPage); // Calculate total pages
+    // Display the loading spinner only while loading
+    if (loading) return <Spinner animation="border" />;
 
-    if (loading) return <Spinner animation="border" />; // Show loading spinner
-    if (error) return <p>{error}</p>; // Show error message
+    // If wallet is not connected, prompt the user to connect their wallet
+    if (!walletConnected) {
+        return (
+            <Container className="text-center mt-4">
+                <p>Please connect your wallet to access the donation platform.</p>
+                {/* <Button onClick={connectWallet}>Connect Wallet</Button> */}
+            </Container>
+        );
+    }
+
+    // If there's an error, show the error message
+    if (error) return <p>{error}</p>;
 
     return (
         <Container className="campaign-list mt-4">
