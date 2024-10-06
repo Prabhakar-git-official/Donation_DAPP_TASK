@@ -9,55 +9,61 @@ import { ethers } from 'ethers';
 import './styling/Navbar.css'; 
 
 const config = {
-    chainId: 84532, // Base Sepolia Testnet
-    chainIdHex: '0x14a34', // Hexadecimal representation of Base Sepolia's Chain ID
-    chainName: ' Base Sepolia Testnet',
-    rpcUrl: 'https://sepolia.base.org/',
-    explorerUrl: 'https://sepolia.basescan.org'
-  };
-  
-  const CustomNavbar = () => {
-    const { isConnected, chainId } = useWeb3ModalAccount();
-    const { walletProvider } = useWeb3ModalProvider();
-    const { open } = useWeb3Modal();
-    const [wrongNetwork, setWrongNetwork] = useState(false);
-  
-    const connectWallet = async () => {
+  chainId: 84532, // Base Sepolia Testnet
+  chainIdHex: '0x14a34', // Hexadecimal representation of Base Sepolia's Chain ID
+  chainName: 'Base Sepolia Testnet',
+  rpcUrl: 'https://sepolia.base.org/',
+  explorerUrl: 'https://sepolia.basescan.org',
+  nativeCurrency: {
+      name: 'SepoliaETH', // Use the appropriate name for the native currency
+      symbol: 'ETH', // Symbol of the native currency
+      decimals: 18, // Decimal places for the native currency
+  },
+};
+
+const CustomNavbar = () => {
+  const { isConnected, chainId } = useWeb3ModalAccount();
+  const { walletProvider } = useWeb3ModalProvider();
+  const { open } = useWeb3Modal();
+  const [wrongNetwork, setWrongNetwork] = useState(false);
+
+  const connectWallet = async () => {
       await open();
-    };
-  
-    const changeNetwork = async () => {
+  };
+
+  const changeNetwork = async () => {
       try {
-        await walletProvider.request({
-          method: 'wallet_switchEthereumChain',
-          params: [{ chainId: config.chainIdHex }],
-        });
+          await walletProvider.request({
+              method: 'wallet_switchEthereumChain',
+              params: [{ chainId: config.chainIdHex }],
+          });
       } catch (switchError) {
-        if (switchError.code === 4902) { // Code for "Chain not added"
-          try {
-            await walletProvider.request({
-              method: 'wallet_addEthereumChain',
-              params: [
-                {
-                  chainId: config.chainIdHex,
-                  chainName: config.chainName,
-                  rpcUrls: [config.rpcUrl],
-                  blockExplorerUrls: [config.explorerUrl],
-                },
-              ],
-            });
-          } catch (addError) {
-            console.error('Failed to add chain:', addError);
+          if (switchError.code === 4902) { // Chain not added
+              try {
+                  await walletProvider.request({
+                      method: 'wallet_addEthereumChain',
+                      params: [
+                          {
+                              chainId: config.chainIdHex,
+                              chainName: config.chainName,
+                              rpcUrls: [config.rpcUrl],
+                              blockExplorerUrls: [config.explorerUrl],
+                              nativeCurrency: config.nativeCurrency, // Add nativeCurrency object here
+                          },
+                      ],
+                  });
+              } catch (addError) {
+                  console.error('Failed to add chain:', addError);
+              }
+          } else {
+              console.error('Failed to switch network:', switchError);
           }
-        } else {
-          console.error('Failed to switch network:', switchError);
-        }
       }
-    };
-  
-    useEffect(() => {
+  };
+
+  useEffect(() => {
       setWrongNetwork(chainId !== config.chainId);
-    }, [chainId]);
+  }, [chainId]);
     return (
       <Navbar bg="primary" variant="dark" expand="lg">
         <Container>
