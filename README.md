@@ -19,11 +19,14 @@ Install dependencies using npm:
 npm install
 Start the application:
 npm start
-# Accessing the Dapp
-Visit: https://calibrainttask.vercel.app/
-1)Connect your wallet by clicking the "Connect Wallet" button.
-2)Navigate to the "Create Campaign" page to set up your own campaign by entering the required details.
-3)To donate to an existing campaign, go to the "View Campaign" page.
-4)In the "My Activity" page, you can view your created and donated campaigns. Once a campaign has ended, you will be able to withdraw the goal amount.
+#Accessing the Dapp
+## Accessing the Dapp
+
+1. Visit: [https://calibrainttask.vercel.app/](https://calibrainttask.vercel.app/)
+2. Connect your wallet by clicking the "Connect Wallet" button.
+3. Navigate to the "Create Campaign" page to set up your own campaign by entering the required details.
+4. To donate to an existing campaign, go to the "View Campaign" page.
+5. In the "My Activity" page, you can view your created and donated campaigns. Once a campaign has ended, you will be able to withdraw the goal amount.
+
 # Note
 Please use the Base Sepolia faucet to get funded. If the faucet is out of ETH, let me know, and I will share some test ETH.
