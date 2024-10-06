@@ -1,0 +1,4 @@
+.navbar-link {
+    color: rgb(251, 254, 252) !important; /* Use !important to override Bootstrap styles */
+    font-weight: bold;
+}
