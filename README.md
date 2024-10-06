@@ -1,10 +1,10 @@
 # Donation_DAPP_TASK
 Simple Decentralized Donation Platform - where users can create causes and donate using crypto tokens
-Smart Contract
+#Smart Contract
 This is a Solidity smart contract for a Donation Dapp, deployed on the Base Sepolia network. Please use the following configuration:
 
-Network Name: Base Sepolia Testnet
-RPC URL: https://sepolia.base.org/
+#Network Name: Base Sepolia Testnet
+#RPC URL: https://sepolia.base.org/
 Chain ID: 84532
 Explorer: https://sepolia.basescan.org
 Currency: ETH
