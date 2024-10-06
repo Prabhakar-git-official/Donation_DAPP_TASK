@@ -1,16 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { BrowserRouter as Router } from 'react-router-dom';
+import './index.css'; // Ensure your CSS is imported
+import App from './App'; // Your main App component
+import reportWebVitals from './reportWebVitals'; // For measuring performance
+import 'bootstrap/dist/css/bootstrap.min.css'; // Bootstrap for styling
 
-
-
+// Create a root for the React application
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+// Render the application wrapped in Router for routing capabilities
 root.render(
   <React.StrictMode>
-    <App />
+    <Router>
+      <App />
+    </Router>
   </React.StrictMode>
 );
 

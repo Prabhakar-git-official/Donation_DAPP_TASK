@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import ActivityCard from './ActivityCard'; 
 import Pagination from 'react-bootstrap/Pagination'; 
 
-const MyActivity = () => {
+const MyActivity = ({ isConnected }) => {
     const [createdCampaigns, setCreatedCampaigns] = useState([]);
     const [donatedCampaigns, setDonatedCampaigns] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -109,7 +109,13 @@ const MyActivity = () => {
     return (
         <Container className="mt-5">
             <h2>My Activity</h2>
-            {loading ? (
+            {!isConnected ? (
+                <div>
+                    <p>Please connect your wallet to view your activity.</p>
+                    {/* <button onClick={connectWallet} className="btn btn-primary">Connect Wallet</button> */}
+                </div>
+            ) :
+            loading ? (
                 <p>Loading campaigns...</p>
             ) : (
                 <>
