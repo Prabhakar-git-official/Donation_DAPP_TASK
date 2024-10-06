@@ -38,7 +38,7 @@ const ViewCampaigns = ({ onDonate }) => {
                 setCampaigns(campaignsArray);
             } catch (error) {
                 console.error("Error fetching campaigns:", error);
-                setError('Failed to load campaigns. Please try again later.'); // Set error message
+                setError('Please Connect wallet to Access Donation Platform.'); // Set error message
             } finally {
                 setLoading(false);
             }
