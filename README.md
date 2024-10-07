@@ -15,11 +15,11 @@ Compiler Version: 0.8.27
 ### To deploy the front end, follow these steps:
 Clone the repository:
 https://github.com/Prabhakar-git-official/Donation_DAPP_TASK.git
-Install dependencies using npm:
+#### Install dependencies using npm:
 npm install
-Start the application:
+#### Start the application:
 npm start
-#Accessing the Dapp
+
 ## Accessing the Dapp
 
 1. Visit: [https://calibrainttask.vercel.app/](https://calibrainttask.vercel.app/)
