@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import ActivityCard from './ActivityCard'; 
 import Pagination from 'react-bootstrap/Pagination'; 
 
-const MyActivity = ({ isConnected }) => {
+const MyActivity = ({ isConnected,walletAddress }) => {
     const [createdCampaigns, setCreatedCampaigns] = useState([]);
     const [donatedCampaigns, setDonatedCampaigns] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -125,7 +125,7 @@ const MyActivity = ({ isConnected }) => {
                             <p>No campaigns created yet.</p>
                         ) : (
                             currentCreatedCampaigns.map((campaign) => (
-                                <ActivityCard key={campaign.id} campaign={campaign} onWithdraw={handleWithdraw} />
+                                <ActivityCard key={campaign.id} campaign={campaign} onWithdraw={handleWithdraw} walletAddress={walletAddress} />
                             ))
                         )}
                     </div>

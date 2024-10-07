@@ -54,7 +54,7 @@ createWeb3Modal({
 });
 
 const App = () => {
-  const { isConnected, chainId } = useWeb3ModalAccount();
+  const { isConnected, chainId,address } = useWeb3ModalAccount();
   const { walletProvider } = useWeb3ModalProvider();
   const { open } = useWeb3Modal();
   const navigate = useNavigate();
@@ -170,7 +170,7 @@ const App = () => {
           element={<ViewCampaigns campaigns={campaigns} loading={loading} onDonate={handleDonate} isConnected={isConnected} />} 
         />
         <Route path="/create" element={<CreateCampaign />} />
-        <Route path="/my-activity" element={<MyActivity isConnected={isConnected}/>} />
+        <Route path="/my-activity" element={<MyActivity isConnected={isConnected} walletAddress={address}/>} />
       </Routes>
        ) : (
         <div className="text-center mt-4">
